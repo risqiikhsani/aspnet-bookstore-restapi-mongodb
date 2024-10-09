@@ -1,0 +1,54 @@
+AddControllers():
+
+    AddControllers() is used in the service configuration part of your application setup, typically in the ConfigureServices method of Startup.cs or directly in Program.cs for minimal hosting model. It's responsible for:
+
+    Registering the MVC controllers and their associated services with the dependency injection container.
+    Configuring MVC-specific options and features.
+    Setting up the necessary services for controller discovery, activation, and execution.
+
+    It's part of the "service registration" phase of the application startup.
+
+MapControllers():
+
+    MapControllers() is used in the application's request pipeline configuration, typically in the Configure method of Startup.cs or after builder.Build() in Program.cs for minimal hosting model. It's responsible for:
+
+    Adding controller endpoint routing to the middleware pipeline.
+    Mapping controller actions to routes based on attribute routing or conventional routing patterns.
+    Ensuring that incoming HTTP requests can be directed to the appropriate controller actions.
+
+    It's part of the "middleware configuration" phase of the application startup.
+
+Here's a simplified example to illustrate where each is typically used:
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    // Service configuration
+    builder.Services.AddControllers(); // This is where AddControllers() is called
+
+    var app = builder.Build();
+
+    // Middleware configuration
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseAuthorization();
+
+    app.MapControllers(); // This is where MapControllers() is called
+
+    app.Run();
+
+
+Key points to remember:
+
+    AddControllers() is called during service registration. It sets up the necessary services for controllers to work.
+    MapControllers() is called during middleware configuration. It sets up the routing for your controllers.
+    Both are necessary for a typical Web API application using controllers. If you forget AddControllers(), your application won't have the necessary services to create and use controllers. If you forget MapControllers(), your application won't know how to route requests to your controller actions.
+    In some cases, you might see UseEndpoints() with endpoints.MapControllers() inside it. This is an older style that's still valid but less common in newer minimal hosting model applications.
+    If you're using additional MVC features like views, you might use AddControllersWithViews() instead of AddControllers().
+    For Razor Pages applications, you would use AddRazorPages() and MapRazorPages() instead.
+
+    Remember, both AddControllers() and MapControllers() are crucial for your ASP.NET Core Web API to function correctly. They work together to ensure your controllers are properly set up and can handle incoming HTTP requests.
