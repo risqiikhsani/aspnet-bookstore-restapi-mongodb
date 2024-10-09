@@ -1,0 +1,35 @@
+@BookStoreApi_HostAddress = http://localhost:5187
+@bookId = 670697cc3e3647db37448441
+
+### Get all books
+GET {{BookStoreApi_HostAddress}}/api/books
+Accept: application/json
+
+### Create a new book
+POST {{BookStoreApi_HostAddress}}/api/books
+Content-Type: application/json
+
+{
+  "name": "Book Title",
+  "price": 29.99,
+  "category": "Fiction",
+  "author": "Author Name"
+}
+
+### Get a specific book
+GET {{BookStoreApi_HostAddress}}/api/books/{{bookId}}
+Accept: application/json
+
+### Update a book
+PUT {{BookStoreApi_HostAddress}}/api/books/{{bookId}}
+Content-Type: application/json
+
+{
+  "name": "Updated Book Title",
+  "price": 39.99,
+  "category": "Non-Fiction",
+  "author": "Updated Author Name"
+}
+
+### Delete a book
+DELETE {{BookStoreApi_HostAddress}}/api/books/{{bookId}}
